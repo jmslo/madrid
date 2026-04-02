@@ -27,7 +27,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: 'The Madrid Residency · April 1–22',
-  description: 'Not a vacation. A deliberate month of building, reading, creating, and becoming.',
+  description: '3 weeks of egg freezing and a deliberate journey of health, building, reading, creating, and setting myself up to be a wonderful mother.',
 }
 
 export default function RootLayout({
