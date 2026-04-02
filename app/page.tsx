@@ -2,6 +2,47 @@ import Link from 'next/link'
 import { schedule } from '@/lib/data/schedule'
 import { tambreAppointments } from '@/lib/data/medical'
 
+type CalCell = { d: number; mark?: string; dot?: string; week: number; window?: boolean; procedureDay?: boolean }
+type CalRow = (CalCell | null)[]
+
+const CALENDAR_ROWS: CalRow[] = [
+  // Row 1: Apr 1–4 (Wed–Sat), padded Sun–Tue
+  [null, null, null,
+    { d: 1,  mark: 'Arrival',      dot: 'var(--terracotta)', week: 1 },
+    { d: 2,  week: 1 },
+    { d: 3,  mark: 'Meds Begin',   dot: 'var(--recovery)',   week: 1 },
+    { d: 4,  week: 1 },
+  ],
+  // Row 2: Apr 5–11
+  [
+    { d: 5,  week: 1 },
+    { d: 6,  week: 1 },
+    { d: 7,  mark: 'Appt 2',       dot: 'var(--recovery)',   week: 1 },
+    { d: 8,  week: 2 },
+    { d: 9,  mark: 'Appt 3',       dot: 'var(--recovery)',   week: 2 },
+    { d: 10, week: 2 },
+    { d: 11, mark: 'Appt 4',       dot: 'var(--recovery)',   week: 2 },
+  ],
+  // Row 3: Apr 12–18
+  [
+    { d: 12, week: 2 },
+    { d: 13, week: 2 },
+    { d: 14, mark: 'Alex Arrives', dot: 'var(--terracotta)', week: 2 },
+    { d: 15, week: 3 },
+    { d: 16, mark: 'Window',       dot: 'var(--gold)',       week: 3, window: true },
+    { d: 17, mark: 'Procedure?',   dot: 'var(--gold)',       week: 3, window: true, procedureDay: true },
+    { d: 18, week: 3, window: true },
+  ],
+  // Row 4: Apr 19–22, padded Thu–Sat
+  [
+    { d: 19, mark: 'Alex Departs', dot: 'var(--terracotta)', week: 3, window: true },
+    { d: 20, week: 4, window: true },
+    { d: 21, week: 4 },
+    { d: 22, mark: 'Fly Home',     dot: 'var(--ink)',        week: 4 },
+    null, null, null,
+  ],
+]
+
 const NAV_CARDS = [
   { href: '/schedule',    label: 'Schedule',    subtitle: '22 days · 3 weeks',         color: 'var(--terracotta)' },
   { href: '/restaurants', label: 'Restaurants', subtitle: '25+ places to eat',          color: 'var(--sage)'       },
@@ -198,9 +239,217 @@ export default function HomePage() {
           ))}
         </div>
 
+        {/* ── Weekly overview ────────────────────────────────────────── */}
+        <div
+          className="text-[10px] tracking-[3px] uppercase mt-14 mb-5"
+          style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+        >
+          Weekly Overview
+        </div>
+        <div className="flex flex-col gap-px" style={{ background: 'var(--dust)' }}>
+          {[
+            { num: '01', dates: 'Apr 1 – 7',   title: 'Arrive, Settle, Launch',               color: 'var(--terracotta)', focus: 'Deploy both apps · Dental + skin appts · Semana Santa · Website architecture' },
+            { num: '02', dates: 'Apr 8 – 14',  title: 'Stims Begin · Build Momentum',          color: 'var(--sage)',       focus: 'AI project format · Website first draft · Malasaña thrift day · Alex arrives Apr 14' },
+            { num: '03', dates: 'Apr 15 – 19', title: 'Peak Stims · Alex Here · Go Gentle',    color: 'var(--gold)',       focus: 'AI project artifact · Flamenco · Best friend week · Retrieval Apr 19' },
+            { num: '↩',  dates: 'Apr 20 – 22', title: 'Rest, Reflect, Receive',               color: 'var(--recovery)',   focus: 'Reflection · Finish books · Gentle walks · Depart proud' },
+          ].map(({ num, dates, title, color, focus }) => (
+            <div
+              key={num}
+              className="grid items-center gap-4 px-5 py-4"
+              style={{ gridTemplateColumns: '36px 90px 1fr', background: 'var(--cream)' }}
+            >
+              <div
+                className="text-2xl font-light leading-none"
+                style={{ fontFamily: 'var(--font-cormorant), serif', color, opacity: 0.5 }}
+              >
+                {num}
+              </div>
+              <div
+                className="text-[9px] tracking-[1px] uppercase leading-relaxed"
+                style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+              >
+                {dates}
+              </div>
+              <div>
+                <div
+                  className="text-[14px] font-normal leading-tight mb-0.5"
+                  style={{ fontFamily: 'var(--font-cormorant), serif', color }}
+                >
+                  {title}
+                </div>
+                <div
+                  className="text-[10px] leading-relaxed"
+                  style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+                >
+                  {focus}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── April Calendar ─────────────────────────────────────────── */}
+        <div
+          className="text-[10px] tracking-[3px] uppercase mt-14 mb-5"
+          style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+        >
+          April 2026
+        </div>
+
+        <div className="border" style={{ borderColor: 'var(--dust)' }}>
+
+          {/* Calendar legend */}
+          <div
+            className="flex flex-wrap gap-x-5 gap-y-2 px-4 py-3 border-b"
+            style={{ borderColor: 'var(--dust)', background: '#faf7f2' }}
+          >
+            {[
+              { color: 'var(--recovery)', label: 'Tambre appt' },
+              { color: 'var(--terracotta)', label: 'Key event' },
+              { color: 'var(--gold)', label: 'Procedure window' },
+              { color: 'var(--ink)', label: 'Departure' },
+            ].map(({ color, label }) => (
+              <div key={label} className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full shrink-0" style={{ background: color }} />
+                <span
+                  className="text-[9px] tracking-[1px] uppercase"
+                  style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+                >
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Day-of-week header */}
+          <div className="grid grid-cols-7 border-b" style={{ borderColor: 'var(--dust)' }}>
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+              <div
+                key={d}
+                className="py-2 text-center text-[9px] tracking-[1px] uppercase"
+                style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+              >
+                {d}
+              </div>
+            ))}
+          </div>
+
+          {/* Calendar grid — April 1 = Wednesday (index 3) */}
+          {CALENDAR_ROWS.map((row, ri) => (
+            <div
+              key={ri}
+              className="grid grid-cols-7 border-b last:border-b-0"
+              style={{ borderColor: 'var(--dust)' }}
+            >
+              {row.map((cell, ci) => {
+                if (!cell) {
+                  return (
+                    <div
+                      key={ci}
+                      className="border-r last:border-r-0 min-h-[72px] md:min-h-[84px]"
+                      style={{ borderColor: 'var(--dust)', background: '#f0ece4' }}
+                    />
+                  )
+                }
+
+                const weekBg: Record<number, string> = {
+                  1: 'rgba(184,92,56,0.04)',
+                  2: 'rgba(122,140,110,0.05)',
+                  3: 'rgba(201,150,58,0.05)',
+                  4: 'rgba(155,139,180,0.05)',
+                }
+
+                const isToday = (() => {
+                  const t = new Date()
+                  return t.getFullYear() === 2026 && t.getMonth() === 3 && t.getDate() === cell.d
+                })()
+
+                return (
+                  <div
+                    key={ci}
+                    className="border-r last:border-r-0 min-h-[72px] md:min-h-[84px] p-1.5 flex flex-col"
+                    style={{
+                      borderColor: 'var(--dust)',
+                      background: cell.window
+                        ? 'rgba(201,150,58,0.08)'
+                        : weekBg[cell.week] ?? 'var(--cream)',
+                      borderTop: cell.procedureDay
+                        ? '2px solid var(--gold)'
+                        : cell.window
+                        ? `2px solid rgba(201,150,58,0.3)`
+                        : undefined,
+                    }}
+                  >
+                    {/* Day number */}
+                    <div className="flex items-center justify-between mb-0.5">
+                      <span
+                        className="text-[13px] md:text-base font-light leading-none"
+                        style={{
+                          fontFamily: 'var(--font-cormorant), serif',
+                          color: isToday ? 'var(--cream)' : cell.d > 22 || !cell.d ? 'var(--dust)' : 'var(--ink)',
+                          background: isToday ? 'var(--ink)' : undefined,
+                          width: isToday ? '20px' : undefined,
+                          height: isToday ? '20px' : undefined,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '2px',
+                        }}
+                      >
+                        {cell.d}
+                      </span>
+                      {cell.dot && (
+                        <div
+                          className="w-1.5 h-1.5 rounded-full shrink-0"
+                          style={{ background: cell.dot }}
+                        />
+                      )}
+                    </div>
+                    {/* Event label */}
+                    {cell.mark && (
+                      <div
+                        className="text-[8px] md:text-[9px] leading-tight mt-auto"
+                        style={{
+                          fontFamily: 'var(--font-dm-mono), monospace',
+                          color: cell.dot ?? 'var(--muted)',
+                          fontWeight: cell.procedureDay ? 500 : 400,
+                        }}
+                      >
+                        {cell.mark}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          ))}
+
+          {/* Procedure window note */}
+          <div
+            className="px-4 py-3 border-t flex items-start gap-3"
+            style={{ borderColor: 'var(--dust)', background: 'rgba(201,150,58,0.06)' }}
+          >
+            <div className="w-2.5 h-2.5 rounded-full shrink-0 mt-0.5" style={{ background: 'var(--gold)' }} />
+            <div>
+              <span
+                className="text-[10px] tracking-[1px] uppercase"
+                style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--gold)' }}
+              >
+                Apr 16–20 · Potential Procedure Window
+              </span>
+              <span
+                className="text-[10px] ml-2"
+                style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+              >
+                · Apr 17 most likely · final timing set by Tambre
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* ── Nav cards ──────────────────────────────────────────────── */}
         <div
-          className="text-[10px] tracking-[3px] uppercase mt-12 mb-6"
+          className="text-[10px] tracking-[3px] uppercase mt-14 mb-6"
           style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
         >
           Navigate

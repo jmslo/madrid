@@ -20,7 +20,7 @@ export default function BudgetPage() {
           className="text-[15px] italic leading-relaxed"
           style={{ fontFamily: 'var(--font-cormorant), serif', color: 'var(--muted)' }}
         >
-          Tracked daily. Saved locally. Medical costs front-loaded — after Day 1 it gets cheaper.
+          Tracked daily with all costs of egg freezing and living in Madrid.
         </p>
       </div>
 
