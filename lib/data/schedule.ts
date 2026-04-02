@@ -49,10 +49,14 @@ export const schedule: DayEntry[] = [
       '7:30am · Walk through Parque Retiro (2 miles)',
       '8:30am · Coffee shop work session: GitHub set up, Vercel connected, jessicaslocum.com purchased and connected, Recipe app deployed to Vercel, Clothing/packing app deployed to Vercel, Initial personal website plan drafted',
       '1:15pm · Cardio dance class at DAN\'S Salamanca',
+      '2:30pm · Lunch at home, then 2 hour nap',
+      '5:30pm · Madrid Residency site deployment using Node JS & Visual Studio Code',
+      '6:00pm · Maundy Thursday processions',
+      '7:30pm · Madrid Residency site deployment pt 2',
+      '7:30pm · Madrid Residency site deployment pt 2',
     ],
     didNotHappen: [
       'Real Jardín Botánico visit (moved to another day)',
-      'Processions (will catch Good Friday ones instead)',
     ],
     tags: ['build', 'medical'],
     spend: [
