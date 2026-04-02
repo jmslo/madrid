@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream:      #f5f0e8;
+  --ink:        #1a1612;
+  --terracotta: #b85c38;
+  --gold:       #c9963a;
+  --sage:       #7a8c6e;
+  --dust:       #d4c9b8;
+  --muted:      #6b6258;
+  --recovery:   #9b8bb4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #f5f0e8;
+  color: #1a1612;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* Typography helpers */
+.font-serif  { font-family: var(--font-cormorant), Georgia, serif; }
+.font-mono   { font-family: var(--font-dm-mono), monospace; }
+.font-sans   { font-family: var(--font-outfit), system-ui, sans-serif; }
+
+/* Section label — DM Mono, uppercase, tracked */
+.label {
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Ink block (budget, spend, dark callouts) */
+.ink-block {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 20px 24px;
+}
+
+/* Alert — gold left border */
+.alert-bar {
+  background: #fff8ee;
+  border-left: 3px solid var(--gold);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Done panel — sage green */
+.done-panel {
+  background: #e8f0e4;
+  border-left: 3px solid var(--sage);
+  padding: 14px 18px;
+}
+
+/* Not-done panel — dust */
+.not-done-panel {
+  background: #fdf5f0;
+  border-left: 3px solid var(--dust);
+  padding: 14px 18px;
+}
+
+/* Protocol/medical bar */
+.protocol-bar {
+  background: #f0eef5;
+  border-left: 3px solid var(--recovery);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: #6b5a8a;
+  line-height: 1.5;
+}
+
+/* Milestone bar */
+.milestone-bar {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 12px 16px;
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.milestone-bar::before {
+  content: '✓';
+  color: var(--gold);
+  font-size: 13px;
+}
+
+/* Tag color variants */
+.tag-build    { background: #e8f0e4; color: var(--sage); }
+.tag-culture  { background: #f5ede5; color: var(--terracotta); }
+.tag-job      { background: #fdf5e6; color: var(--gold); }
+.tag-medical  { background: #f0eef5; color: var(--recovery); }
+.tag-social   { background: #e8ede4; color: #5a7a4e; }
+.tag-reading  { background: #f0ece4; color: #8a7060; }
+.tag-music    { background: #f5e8ec; color: #a04060; }
+.tag-milestone { background: var(--ink); color: var(--gold); }
+.tag-together { background: #fde8d8; color: var(--terracotta); }
+.tag-personal { background: #f5f0e8; color: var(--muted); border: 1px solid var(--dust); }
+.tag-transport { background: #e8f0f5; color: #4a6a8a; }
+
+/* Week color accents */
+.week-1-accent { color: var(--terracotta); }
+.week-2-accent { color: var(--sage); }
+.week-3-accent { color: var(--gold); }
+.week-4-accent { color: var(--recovery); }
