@@ -1,7 +1,7 @@
 import { markets } from '@/lib/data/markets'
 import MarketImage from './MarketImage'
 
-// ─── Per-market metadata (image, type, your-dates) ───────────────────────────
+// ─── Per-market metadata ──────────────────────────────────────────────────────
 
 type MarketType = 'Shopping' | 'Food' | 'Both'
 
@@ -51,7 +51,7 @@ function TypeBadge({ type }: { type: MarketType }) {
   const { bg, color, label } = TYPE_STYLES[type]
   return (
     <span
-      className="shrink-0 text-[8px] tracking-[1.5px] uppercase px-2 py-1 self-start"
+      className="text-[8px] tracking-[1.5px] uppercase px-2 py-1 self-start"
       style={{ fontFamily: 'var(--font-dm-mono), monospace', background: bg, color }}
     >
       {label}
@@ -64,10 +64,10 @@ function TypeBadge({ type }: { type: MarketType }) {
 function ClockIcon() {
   return (
     <svg
-      width="11" height="11" viewBox="0 0 24 24"
+      width="10" height="10" viewBox="0 0 24 24"
       fill="none" stroke="currentColor" strokeWidth="2.5"
       strokeLinecap="round" strokeLinejoin="round"
-      style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px', marginTop: '-1px', flexShrink: 0 }}
+      style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px', marginTop: '-1px', flexShrink: 0 }}
     >
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
@@ -75,14 +75,14 @@ function ClockIcon() {
   )
 }
 
-// ─── Calendar block ───────────────────────────────────────────────────────────
+// ─── Calendar block data ──────────────────────────────────────────────────────
 
 const CALENDAR = [
-  { date: 'Every Sunday',           label: 'El Rastro · 9am–3pm' },
-  { date: 'Every Sat (spring)',      label: 'Malamarket · Plaza Dos de Mayo' },
+  { date: 'Every Sunday',            label: 'El Rastro · 9am–3pm' },
+  { date: 'Every Sat (spring)',       label: 'Malamarket · Plaza Dos de Mayo' },
   { date: 'Apr 11–12 (2nd weekend)', label: 'Mercado de Motores · 11am–9pm' },
-  { date: 'Mon–Sat, daily',          label: 'Mercadillo Felipe II · your barrio' },
-  { date: 'Mon–Sat 9am–8pm',         label: 'Mercado de la Paz · your street' },
+  { date: 'Mon–Sat, daily',           label: 'Mercadillo Felipe II · your barrio' },
+  { date: 'Mon–Sat 9am–8pm',          label: 'Mercado de la Paz · your street' },
   { date: 'Daily (best weekends)',    label: 'Cuesta de Moyano books' },
 ]
 
@@ -158,121 +158,135 @@ export default function MarketsPage() {
         Sat Apr 11: Salesas morning → Motores afternoon → Rastro Sun Apr 12
       </div>
 
-      {/* 2-column card grid */}
-      <div
-        className="grid gap-6"
-        style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))' }}
-      >
+      {/* ── Market cards — horizontal layout ──────────────────────────────── */}
+      <div className="flex flex-col gap-5">
         {markets.map((market) => {
           const meta = MARKET_META[market.id]
           if (!meta) return null
 
-          const hoursParts = (market.hours || '').split(' · ')
+          // Split hours: first segment = schedule (bold), rest = times/details (muted)
+          const [schedPart, ...detailParts] = (market.hours || '').split(' · ')
+
+          // Callout: prefer yourDates, fall back to notes — always shown
+          const hasYourDates = Boolean(meta.yourDates)
+          const calloutLabel = hasYourDates ? 'Your possible dates' : 'Notes'
+          const calloutText  = hasYourDates ? meta.yourDates! : (market.notes || '')
 
           return (
             <div
               key={market.id}
-              style={{
-                border: '1px solid var(--dust)',
-                background: 'var(--cream)',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
+              className="flex"
+              style={{ border: '1px solid var(--dust)', background: 'var(--cream)' }}
             >
-              {/* Photo */}
-              <MarketImage src={meta.image} name={market.name} />
+              {/* ── Image — left, fixed 260×220px box ── */}
+              <MarketImage
+                src={meta.image}
+                name={market.name}
+                containerStyle={{ width: '260px', height: '220px', flexShrink: 0, alignSelf: 'flex-start' }}
+              />
 
-              {/* Card body */}
-              <div className="flex flex-col flex-1 p-5 gap-4">
+              {/* ── Content — right ── */}
+              <div
+                className="flex flex-col flex-1 px-6 py-5"
+                style={{ gap: '10px' }}
+              >
 
-                {/* Title + type badge */}
-                <div className="flex items-start justify-between gap-3">
-                  <h2
-                    className="font-light leading-tight"
-                    style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '22px', color: 'var(--ink)' }}
-                  >
-                    {market.name}
-                  </h2>
-                  <TypeBadge type={meta.type} />
-                </div>
+                {/* 1. Market name */}
+                <h2
+                  className="font-light leading-tight"
+                  style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '23px', color: 'var(--ink)' }}
+                >
+                  {market.name}
+                </h2>
 
-                {/* Neighborhood + address */}
+                {/* 2. Neighborhood + address */}
                 <div
-                  className="text-[10px] tracking-[1px] uppercase -mt-2"
-                  style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+                  className="text-[10px] tracking-[1px] uppercase"
+                  style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)', marginTop: '-4px' }}
                 >
                   {market.neighborhood}
                   <span style={{ color: 'var(--dust)', margin: '0 6px' }}>·</span>
                   {market.address}
                 </div>
 
-                {/* Hours */}
-                <div
-                  className="py-3 px-3"
-                  style={{ background: '#f5f0e0', borderLeft: '2px solid var(--gold)' }}
-                >
+                {/* 3. Hours */}
+                <div>
                   <div
-                    className="flex items-center mb-1.5"
-                    style={{ fontFamily: 'var(--font-dm-mono), monospace', fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)' }}
+                    className="flex items-center mb-1"
+                    style={{
+                      fontFamily: 'var(--font-dm-mono), monospace',
+                      fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase',
+                      color: 'var(--gold)',
+                    }}
                   >
                     <ClockIcon />
                     Hours
                   </div>
-                  <div className="flex flex-col gap-0.5">
-                    {hoursParts.map((part, i) => (
-                      <div
-                        key={i}
-                        className="text-[11px] leading-snug"
-                        style={{
-                          fontFamily: 'var(--font-dm-mono), monospace',
-                          color: i === 0 ? 'var(--ink)' : 'var(--muted)',
-                          fontWeight: i === 0 ? 400 : 300,
-                        }}
-                      >
-                        {part}
-                      </div>
-                    ))}
+                  {/* Schedule line — bold/ink */}
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-dm-mono), monospace',
+                      fontSize: '11px', fontWeight: 500,
+                      color: 'var(--ink)', lineHeight: 1.5,
+                    }}
+                  >
+                    {schedPart}
                   </div>
+                  {/* Detail lines — muted */}
+                  {detailParts.map((part, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        fontFamily: 'var(--font-dm-mono), monospace',
+                        fontSize: '11px', fontWeight: 300,
+                        color: 'var(--muted)', lineHeight: 1.5,
+                      }}
+                    >
+                      {part}
+                    </div>
+                  ))}
                 </div>
 
-                {/* Description */}
+                {/* 4. Type badge */}
+                <TypeBadge type={meta.type} />
+
+                {/* 5. Description */}
                 <p
-                  className="text-[13px] leading-relaxed flex-1"
-                  style={{ color: 'var(--ink)' }}
+                  style={{ fontSize: '13px', color: 'var(--ink)', lineHeight: 1.65, margin: 0 }}
                 >
                   {market.description}
                 </p>
 
-                {/* Notes */}
-                {market.notes && (
-                  <p
-                    className="text-[12px] italic leading-relaxed"
-                    style={{ fontFamily: 'var(--font-cormorant), serif', color: 'var(--muted)', fontSize: '13px' }}
-                  >
-                    {market.notes}
-                  </p>
-                )}
-
-                {/* Your dates callout */}
-                {meta.yourDates && (
+                {/* 6. Callout — always shown (your dates or notes) */}
+                <div
+                  style={{
+                    borderLeft: '3px solid var(--gold)',
+                    background: '#fff8ee',
+                    padding: '8px 12px',
+                    marginTop: 'auto',
+                  }}
+                >
                   <div
-                    className="px-3 py-2.5"
-                    style={{ background: '#fff8ee', borderLeft: '3px solid var(--gold)' }}
+                    style={{
+                      fontFamily: 'var(--font-dm-mono), monospace',
+                      fontSize: '8px', letterSpacing: '2px', textTransform: 'uppercase',
+                      color: 'var(--gold)', marginBottom: '3px',
+                    }}
                   >
-                    <div
-                      className="text-[9px] tracking-[1.5px] uppercase mb-0.5"
-                      style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--gold)' }}
-                    >
-                      Your dates
-                    </div>
-                    <div
-                      className="text-[12px]"
-                      style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--ink)' }}
-                    >
-                      {meta.yourDates}
-                    </div>
+                    {calloutLabel}
                   </div>
-                )}
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-dm-mono), monospace',
+                      fontSize: '11px',
+                      fontWeight: hasYourDates ? 500 : 300,
+                      color: hasYourDates ? 'var(--ink)' : 'var(--muted)',
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {calloutText}
+                  </div>
+                </div>
 
               </div>
             </div>
