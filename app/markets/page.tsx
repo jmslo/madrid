@@ -167,7 +167,7 @@ export default function MarketsPage() {
           const meta = MARKET_META[market.id]
           if (!meta) return null
 
-          const hoursParts = market.hours.split(' · ')
+          const hoursParts = (market.hours || '').split(' · ')
 
           return (
             <div
