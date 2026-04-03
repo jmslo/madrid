@@ -11,23 +11,43 @@ type DaySpend = {
 
 const SEED_DATA: DaySpend[] = [
   {
+    day: 0,
+    date: 'Mar 31',
+    items: [
+      { label: 'MTA/PATH/Lyft to Newark Airport',          amount: 31.98,    category: 'transport' },
+      { label: 'EWR dinner at Proof',                      amount: 29.95,   category: 'food'      },
+    ],
+  },
+  {
     day: 1,
     date: 'Apr 1',
     items: [
-      { label: 'Uber from bus',                            amount: 8.05,    category: 'transport' },
+      { label: 'Bus + Uber to apartment',                  amount: 9.79,    category: 'transport' },
       { label: 'Uber to clinic',                           amount: 5.74,    category: 'transport' },
-      { label: 'Blood tests · Clínica Tambre',             amount: 341.17,  category: 'medical'   },
-      { label: 'Pharmacy meds (Pergoveris + Desogestrel)', amount: 1129.16, category: 'medical'   },
+      { label: 'Clínica Tambre blood tests',             amount: 341.17,  category: 'medical'   },
+      { label: 'Round 1 of meds (Pergoveris + Desogestrel)', amount: 1129.16, category: 'medical'   },
       { label: 'Manicure + brows',                         amount: 102.00,  category: 'personal'  },
-      { label: 'Grocery store (~3 meals + snacks)',         amount: 46.33,   category: 'food'      },
+      { label: 'Grocery store @ Froiz (~3 meals + snacks)',        amount: 46.33,   category: 'food' },
     ],
   },
   {
     day: 2,
     date: 'Apr 2',
     items: [
-      { label: 'Cortado + banana bread · Hola Coffee', amount: 8.26,  category: 'food'  },
+      { label: 'Cortado + banana bread @ VEIA Coffee', amount: 8.26,  category: 'food'  },
+      { label: 'Cortado @ Religion', amount: 2.79,  category: 'food'  },
       { label: 'jessicaslocum.com · Year 1 · Namecheap', amount: 6.99, category: 'build' },
+      { label: 'Grocery store @ Froiz (veggies, pepper)',  amount: 9.19,   category: 'food' },
+      { label: 'Anthropic data to finish deployment', amount: 5.44, category: 'build' },
+      { label: 'Dinner @ Little Dragon',  amount: 20.70,   category: 'food' },
+      { label: 'Froyo @ Myka',  amount: 4.77,   category: 'food' },
+    ],
+  },
+  {
+    day: 3,
+    date: 'Apr 3',
+    items: [
+      { label: 'Cortado @ BAM Labs', amount: 3.25,  category: 'food'  },
     ],
   },
 ]
