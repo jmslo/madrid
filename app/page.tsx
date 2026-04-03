@@ -8,7 +8,7 @@ type CalRow = (CalCell | null)[]
 const CALENDAR_ROWS: CalRow[] = [
   // Row 1: Apr 1–4 (Wed–Sat), padded Sun–Tue
   [null, null, null,
-    { d: 1,  mark: 'Arrival',      dot: 'var(--terracotta)', week: 1 },
+    { d: 1,  mark: 'Arrival, Appt 1',      dot: 'var(--terracotta)', week: 1 },
     { d: 2,  week: 1 },
     { d: 3,  mark: 'Meds Begin',   dot: 'var(--recovery)',   week: 1 },
     { d: 4,  week: 1 },
@@ -29,8 +29,8 @@ const CALENDAR_ROWS: CalRow[] = [
     { d: 13, week: 2 },
     { d: 14, mark: 'Alex Arrives', dot: 'var(--terracotta)', week: 2 },
     { d: 15, week: 3 },
-    { d: 16, mark: 'Window',       dot: 'var(--gold)',       week: 3, window: true },
-    { d: 17, mark: 'Procedure?',   dot: 'var(--gold)',       week: 3, window: true, procedureDay: true },
+    { d: 16, mark: 'Moshik Arrives',       dot: 'var(--gold)',       week: 3, window: true },
+    { d: 17, mark: 'Procedure Window',   dot: 'var(--gold)',       week: 3, window: true, procedureDay: true },
     { d: 18, week: 3, window: true },
   ],
   // Row 4: Apr 19–22, padded Thu–Sat
@@ -129,7 +129,7 @@ export default function HomePage() {
           className="text-lg italic opacity-60 max-w-lg leading-relaxed"
           style={{ fontFamily: 'var(--font-cormorant), serif' }}
         >
-          Not a vacation. A deliberate month of building, reading, creating, and becoming.
+          April 2026 stay for egg freezing, with a deliberate time spent building, reading, creating, and preparing for my future.
         </p>
       </header>
 
@@ -137,9 +137,9 @@ export default function HomePage() {
       <div className="flex overflow-x-auto" style={{ borderBottom: '1px solid var(--dust)' }}>
         {[
           { color: 'var(--terracotta)', label: 'Week 1 — Arrive & Launch' },
-          { color: 'var(--sage)',       label: 'Week 2 — Stims Begin'     },
-          { color: 'var(--gold)',       label: 'Week 3 — Go Gentle'       },
-          { color: 'var(--recovery)',   label: 'Recovery — Reflect'       },
+          { color: 'var(--sage)',       label: 'Week 2 — Appointments Begin'     },
+          { color: 'var(--gold)',       label: 'Week 3 — Alex & Moshik Visits'       },
+          { color: 'var(--recovery)',   label: 'Week 4 - Procedure & Recovery'       },
         ].map(({ color, label }) => (
           <div
             key={label}
@@ -172,12 +172,13 @@ export default function HomePage() {
         </div>
         <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
           {[
-            { num: '01', text: 'Successfully freeze your eggs. This is the whole reason you\'re here. Everything else is secondary.', primary: true },
+            { num: '01', text: 'Freeze your eggs. Healthy lifestyle and timely meds. Lots of sleep, nutritious food, no drinks, no workouts.', primary: true },
             { num: '02', text: 'Deploy recipe app + clothing app publicly via GitHub / Vercel' },
-            { num: '03', text: 'Build personal portfolio website — live before departure' },
+            { num: '03', text: 'Build jessicaslocum.com personal portfolio and deploy live' },
             { num: '04', text: 'Shape the AI education project into a real artifact' },
             { num: '05', text: 'Active job search — apply to education-adjacent roles weekly' },
             { num: '06', text: 'Read 3 books, journal daily, 2+ hours of reading per day' },
+            { num: '07', text: 'Catch up on all texts and emails, down to zero upon departure' },
           ].map(({ num, text, primary }) => (
             <div
               key={num}
@@ -248,10 +249,10 @@ export default function HomePage() {
         </div>
         <div className="flex flex-col gap-px" style={{ background: 'var(--dust)' }}>
           {[
-            { num: '01', dates: 'Apr 1 – 7',   title: 'Arrive, Settle, Launch',               color: 'var(--terracotta)', focus: 'Deploy both apps · Dental + skin appts · Semana Santa · Website architecture' },
+            { num: '01', dates: 'Apr 1 – 7',   title: 'Arrive, Settle, Launch',               color: 'var(--terracotta)', focus: 'Deploy both apps · Final workouts · Semana Santa · Website architecture' },
             { num: '02', dates: 'Apr 8 – 14',  title: 'Stims Begin · Build Momentum',          color: 'var(--sage)',       focus: 'AI project format · Website first draft · Malasaña thrift day · Alex arrives Apr 14' },
-            { num: '03', dates: 'Apr 15 – 19', title: 'Peak Stims · Alex Here · Go Gentle',    color: 'var(--gold)',       focus: 'AI project artifact · Flamenco · Best friend week · Retrieval Apr 19' },
-            { num: '↩',  dates: 'Apr 20 – 22', title: 'Rest, Reflect, Receive',               color: 'var(--recovery)',   focus: 'Reflection · Finish books · Gentle walks · Depart proud' },
+            { num: '03', dates: 'Apr 15 – 19', title: 'Peak Stims · Alex Here · Go Gentle',    color: 'var(--gold)',       focus: 'AI project artifact · Museums · Best friend week · Retrieval Apr 19' },
+            { num: '↩',  dates: 'Apr 20 – 22', title: 'Rest, Reflect, Receive',               color: 'var(--recovery)',   focus: 'Reflection · Finish all goals · Gentle walks · Depart proud' },
           ].map(({ num, dates, title, color, focus }) => (
             <div
               key={num}

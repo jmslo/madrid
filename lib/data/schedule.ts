@@ -53,7 +53,7 @@ export const schedule: DayEntry[] = [
       '5:30pm · Madrid Residency site deployment using Node JS & Visual Studio Code',
       '6:00pm · Maundy Thursday processions',
       '7:30pm · Madrid Residency site deployment pt 2',
-      '7:30pm · Madrid Residency site deployment pt 2',
+      '9:30pm · Dinner at Little Dragon & Froyo',
     ],
     didNotHappen: [
       'Real Jardín Botánico visit (moved to another day)',
