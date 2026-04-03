@@ -1,34 +1,324 @@
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+type RowKind = 'preappt' | 'meds' | 'appt' | 'trigger' | 'antibiotic' | 'retrieval' | 'window' | 'empty'
+
+type Follicle = { side: 'R' | 'L'; count: number | null; detail: string }
+
+type Cell = {
+  date: string
+  kind: RowKind
+  meds?: string
+  medsNote?: string        // timing/context note for meds
+  follicles?: Follicle[]
+  notes?: string
+  eggs?: string            // retrieval outcome
+} | null                   // null = no data for this round on this day
+
+type DayRow = {
+  label: string            // left-column label e.g. "Day 1"
+  r1: Cell
+  r2: Cell
+}
+
+// ─── Data ────────────────────────────────────────────────────────────────────
+// To update Round 2: find the '—' strings below and replace with real data.
+// Each appointment cell is clearly marked with kind: 'appt'.
+
+const MEDS_BASE = 'Gonal 150 IU · Meriofert 150 IU · Desogestrel 75mg'
+
+const tableRows: DayRow[] = [
+  // ── Pre-appointment (Round 2 only) ──────────────────────────────────────
+  {
+    label: 'Pre-Appt',
+    r1: null,
+    r2: {
+      date: 'Apr 1',
+      kind: 'preappt',
+      notes: '—',   // ← update after appointment
+    },
+  },
+
+  // ── Day 1 — Meds start + baseline scan ──────────────────────────────────
+  {
+    label: 'Day 1',
+    r1: {
+      date: 'Nov 21',
+      kind: 'appt',
+      meds: MEDS_BASE,
+      follicles: [
+        { side: 'R', count: null, detail: 'asleep from IUD · very small' },
+        { side: 'L', count: null, detail: 'asleep from IUD · very small' },
+      ],
+      notes: 'IUD in place · uterus looks good',
+    },
+    r2: {
+      date: 'Apr 3',
+      kind: 'meds',
+      meds: '—',   // ← meds TBD — update once confirmed
+    },
+  },
+
+  // ── Day 2 ───────────────────────────────────────────────────────────────
+  {
+    label: 'Day 2',
+    r1: { date: 'Nov 22', kind: 'meds', meds: MEDS_BASE },
+    r2: { date: 'Apr 4',  kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 3 ───────────────────────────────────────────────────────────────
+  {
+    label: 'Day 3',
+    r1: { date: 'Nov 23', kind: 'meds', meds: MEDS_BASE },
+    r2: { date: 'Apr 5',  kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 4 ───────────────────────────────────────────────────────────────
+  {
+    label: 'Day 4',
+    r1: { date: 'Nov 24', kind: 'meds', meds: MEDS_BASE },
+    r2: { date: 'Apr 6',  kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 5 — Appointment ─────────────────────────────────────────────────
+  {
+    label: 'Day 5',
+    r1: {
+      date: 'Nov 25',
+      kind: 'appt',
+      meds: MEDS_BASE,
+      follicles: [
+        { side: 'R', count: 6,  detail: '5× <10mm · 1× 10mm' },
+        { side: 'L', count: 9,  detail: '8× <10mm · 1× 10mm' },
+      ],
+      notes: 'Follicles still small · expected at this stage',
+    },
+    r2: {
+      date: 'Apr 7',
+      kind: 'appt',
+      follicles: [
+        { side: 'R', count: null, detail: '—' },  // ← update after appointment
+        { side: 'L', count: null, detail: '—' },  // ← update after appointment
+      ],
+      notes: '—',   // ← update after appointment
+    },
+  },
+
+  // ── Day 6 ───────────────────────────────────────────────────────────────
+  {
+    label: 'Day 6',
+    r1: { date: 'Nov 26', kind: 'meds', meds: MEDS_BASE },
+    r2: { date: 'Apr 8',  kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 7 — Appointment ─────────────────────────────────────────────────
+  {
+    label: 'Day 7',
+    r1: {
+      date: 'Nov 27',
+      kind: 'appt',
+      meds: MEDS_BASE,
+      follicles: [
+        { side: 'R', count: 7,  detail: '6× <10mm · 1× 13mm' },
+        { side: 'L', count: 10, detail: '8× <10mm · 1× 11mm · 1× 13mm' },
+      ],
+    },
+    r2: {
+      date: 'Apr 9',
+      kind: 'appt',
+      follicles: [
+        { side: 'R', count: null, detail: '—' },  // ← update after appointment
+        { side: 'L', count: null, detail: '—' },  // ← update after appointment
+      ],
+      notes: '—',   // ← update after appointment
+    },
+  },
+
+  // ── Day 8 ───────────────────────────────────────────────────────────────
+  {
+    label: 'Day 8',
+    r1: { date: 'Nov 28', kind: 'meds', meds: MEDS_BASE },
+    r2: { date: 'Apr 10', kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 9 — Appointment ─────────────────────────────────────────────────
+  {
+    label: 'Day 9',
+    r1: {
+      date: 'Nov 29',
+      kind: 'appt',
+      meds: MEDS_BASE,
+      follicles: [
+        { side: 'R', count: 7,  detail: '4× <10mm · 1× 10mm · 2× 12mm · 1× 17mm' },
+        { side: 'L', count: 10, detail: '6× <10mm · 1× 10mm · 1× 12mm · 1× 14mm · 1× 17mm' },
+      ],
+      notes: '8 small · 8 medium · 0 big',
+    },
+    r2: {
+      date: 'Apr 11',
+      kind: 'appt',
+      follicles: [
+        { side: 'R', count: null, detail: '—' },  // ← update after appointment
+        { side: 'L', count: null, detail: '—' },  // ← update after appointment
+      ],
+      notes: '—',   // ← update after appointment
+    },
+  },
+
+  // ── Day 10 ──────────────────────────────────────────────────────────────
+  {
+    label: 'Day 10',
+    r1: { date: 'Nov 30', kind: 'empty' },
+    r2: { date: 'Apr 12', kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 11 ──────────────────────────────────────────────────────────────
+  {
+    label: 'Day 11',
+    r1: { date: 'Dec 1', kind: 'empty' },
+    r2: { date: 'Apr 13', kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 12 — Appointment + meds change ──────────────────────────────────
+  {
+    label: 'Day 12',
+    r1: {
+      date: 'Dec 2',
+      kind: 'appt',
+      meds: 'Gonal 300 IU · Desogestrel 75mcg',
+      medsNote: 'dose increase',
+      follicles: [
+        { side: 'R', count: null, detail: 'data not recorded' },
+        { side: 'L', count: null, detail: 'data not recorded' },
+      ],
+      notes: '13 follicles total',
+    },
+    r2: { date: 'Apr 14', kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 13 — Trigger shot ───────────────────────────────────────────────
+  {
+    label: 'Day 13',
+    r1: {
+      date: 'Dec 3',
+      kind: 'trigger',
+      meds: 'Ovitrelle 250mcg · Decapeptyl (2 powder + 1 liquid) · Desogestrel 75mcg',
+      medsNote: 'at 9pm · 36h before retrieval',
+    },
+    r2: { date: 'Apr 15', kind: 'meds', meds: '—' },
+  },
+
+  // ── Day 14 — Pre-retrieval antibiotic ───────────────────────────────────
+  {
+    label: 'Day 14',
+    r1: {
+      date: 'Dec 4',
+      kind: 'antibiotic',
+      meds: 'Azithromycin 1g',
+      medsNote: '2 hours after dinner',
+    },
+    r2: {
+      date: 'Apr 16',
+      kind: 'window',
+      notes: 'Potential retrieval window begins',
+    },
+  },
+
+  // ── Day 15 — Retrieval ──────────────────────────────────────────────────
+  {
+    label: 'Day 15',
+    r1: {
+      date: 'Dec 5',
+      kind: 'retrieval',
+      eggs: '12 eggs extracted · 5 viable',
+    },
+    r2: {
+      date: 'Apr 17',
+      kind: 'window',
+      notes: 'Most likely retrieval day',
+    },
+  },
+
+  // ── Days 16–18 (Round 2 window continues) ───────────────────────────────
+  {
+    label: 'Day 16',
+    r1: null,
+    r2: { date: 'Apr 18', kind: 'window', notes: 'Potential retrieval window' },
+  },
+  {
+    label: 'Day 17',
+    r1: null,
+    r2: { date: 'Apr 19', kind: 'window', notes: 'Potential retrieval window' },
+  },
+  {
+    label: 'Day 18',
+    r1: null,
+    r2: { date: 'Apr 20', kind: 'window', notes: 'Potential retrieval window' },
+  },
+]
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function kindLabel(kind: RowKind): string {
+  switch (kind) {
+    case 'preappt':    return 'pre-appt'
+    case 'appt':       return 'appt'
+    case 'trigger':    return 'trigger shot'
+    case 'antibiotic': return 'pre-op'
+    case 'retrieval':  return '✦ retrieval'
+    case 'window':     return 'retrieval window'
+    default:           return ''
+  }
+}
+
+const KIND_COLORS: Record<RowKind, { bg: string; tag: string; tagText: string }> = {
+  preappt:    { bg: '#f5f2fb', tag: '#9b8bb4',            tagText: 'white' },
+  meds:       { bg: 'transparent',      tag: 'transparent',         tagText: 'transparent' },
+  appt:       { bg: '#f5f2fb', tag: '#9b8bb4',            tagText: 'white' },
+  trigger:    { bg: '#fdf8ec', tag: 'var(--gold)',         tagText: 'white' },
+  antibiotic: { bg: '#fdf2ee', tag: 'var(--terracotta)',   tagText: 'white' },
+  retrieval:  { bg: '#edf4ea', tag: 'var(--sage)',         tagText: 'white' },
+  window:     { bg: '#edf4ea', tag: '#aabf9e',             tagText: 'white' },
+  empty:      { bg: 'transparent',      tag: 'transparent',         tagText: 'transparent' },
+}
+
+// Is this row a "compact" meds-only row (no appointment)?
+function isCompact(r1: Cell, r2: Cell): boolean {
+  const k1 = r1?.kind ?? 'empty'
+  const k2 = r2?.kind ?? 'empty'
+  const compact: RowKind[] = ['meds', 'empty']
+  return compact.includes(k1) && compact.includes(k2)
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default function MedicalPage() {
-  // ─── April 2026 calendar data ────────────────────────────────────────────
   // April 1, 2026 = Wednesday (index 3, Sun=0)
   const calendarOffset = 3
-  const days = Array.from({ length: 22 }, (_, i) => i + 1)
+  const calendarDays = Array.from({ length: 22 }, (_, i) => i + 1)
 
   const dayMeta: Record<number, { label: string; sub?: string; type: string }> = {
-    1:  { label: 'Pre-Appt', sub: 'Day 1',  type: 'appt' },
-    3:  { label: 'Meds Begin',              type: 'meds' },
-    7:  { label: 'Appt 2',   sub: 'Day 7',  type: 'appt' },
-    9:  { label: 'Appt 3',   sub: 'Day 9',  type: 'appt' },
-    11: { label: 'Appt 4',   sub: 'Day 11', type: 'appt' },
-    16: { label: 'Window',                  type: 'window' },
-    17: { label: '★ Likely',                type: 'likely' },
-    18: { label: 'Window',                  type: 'window' },
-    19: { label: 'Window',                  type: 'window' },
-    20: { label: 'Window',                  type: 'window' },
+    1:  { label: 'Pre-Appt',   sub: 'Apr 1',  type: 'preappt' },
+    3:  { label: 'Day 1',      sub: 'Meds ↑', type: 'meds' },
+    7:  { label: 'Appt',       sub: 'Day 5',  type: 'appt' },
+    9:  { label: 'Appt',       sub: 'Day 7',  type: 'appt' },
+    11: { label: 'Appt',       sub: 'Day 9',  type: 'appt' },
+    16: { label: 'Window',                    type: 'window' },
+    17: { label: '★ Likely',                  type: 'likely' },
+    18: { label: 'Window',                    type: 'window' },
+    19: { label: 'Window',                    type: 'window' },
+    20: { label: 'Window',                    type: 'window' },
   }
 
-  // Build 7-column grid cells (blanks + days 1-22)
   const gridCells: Array<number | null> = [
     ...Array(calendarOffset).fill(null),
-    ...days,
+    ...calendarDays,
   ]
-  // Pad to full rows
   while (gridCells.length % 7 !== 0) gridCells.push(null)
 
   return (
     <div className="max-w-4xl mx-auto px-6 pb-20">
 
-      {/* ── Header ──────────────────────────────────────────────────────── */}
+      {/* ── Header ────────────────────────────────────────────────────────── */}
       <div className="py-10 border-b" style={{ borderColor: 'var(--dust)' }}>
         <div
           className="text-[10px] tracking-[3px] uppercase mb-3"
@@ -43,7 +333,6 @@ export default function MedicalPage() {
           Medical
         </h1>
 
-        {/* Header notes */}
         <div
           className="inline-grid gap-x-8 gap-y-2 text-[13px]"
           style={{ gridTemplateColumns: 'auto 1fr' }}
@@ -55,9 +344,12 @@ export default function MedicalPage() {
             AMH
           </span>
           <span style={{ color: 'var(--ink)' }}>
-            2.15 <span style={{ color: 'var(--muted)', fontSize: '12px' }}>(January 2026)</span>
+            2.15{' '}
+            <span style={{ color: 'var(--muted)', fontSize: '12px' }}>(January 2026)</span>
             <span style={{ color: 'var(--dust)', margin: '0 8px' }}>·</span>
-            <span style={{ color: 'var(--muted)', fontSize: '12px', textDecoration: 'line-through' }}>previously 4.41 (October 2024)</span>
+            <span style={{ color: 'var(--muted)', fontSize: '12px', textDecoration: 'line-through' }}>
+              previously 4.41 (October 2024)
+            </span>
           </span>
           <span
             className="text-[10px] tracking-[1px] uppercase self-center"
@@ -69,8 +361,8 @@ export default function MedicalPage() {
         </div>
       </div>
 
-      {/* ── Round Comparison Table ───────────────────────────────────────── */}
-      <div className="mt-10 mb-12">
+      {/* ── Round Comparison Table ─────────────────────────────────────────── */}
+      <div className="mt-10 mb-14">
         <div
           className="text-[10px] tracking-[2px] uppercase mb-6 pb-2 border-b"
           style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--recovery)', borderColor: 'var(--dust)' }}
@@ -79,172 +371,77 @@ export default function MedicalPage() {
         </div>
 
         {/* Column headers */}
-        <div
-          className="grid mb-1"
-          style={{ gridTemplateColumns: '90px 1fr 1fr' }}
-        >
+        <div className="grid mb-px" style={{ gridTemplateColumns: '68px 1fr 1fr' }}>
           <div />
           <div
-            className="px-4 py-3 text-[10px] tracking-[2px] uppercase text-center"
-            style={{
-              fontFamily: 'var(--font-dm-mono), monospace',
-              background: 'var(--ink)',
-              color: 'var(--cream)',
-            }}
+            className="px-4 py-3 text-center"
+            style={{ background: 'var(--ink)' }}
           >
-            Round 1<br />
-            <span style={{ color: 'rgba(245,240,232,0.45)', fontSize: '9px', letterSpacing: '1px' }}>Nov – Dec 2024</span>
+            <div
+              className="text-[10px] tracking-[2px] uppercase"
+              style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--cream)' }}
+            >
+              Round 1
+            </div>
+            <div
+              className="text-[9px] tracking-[1px] mt-0.5"
+              style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'rgba(245,240,232,0.4)' }}
+            >
+              Nov – Dec 2024
+            </div>
           </div>
           <div
-            className="px-4 py-3 text-[10px] tracking-[2px] uppercase text-center ml-px"
-            style={{
-              fontFamily: 'var(--font-dm-mono), monospace',
-              background: '#3d2f5c',
-              color: 'var(--cream)',
-            }}
+            className="px-4 py-3 text-center ml-px"
+            style={{ background: '#3d2f5c' }}
           >
-            Round 2 ·current<br />
-            <span style={{ color: 'rgba(245,240,232,0.45)', fontSize: '9px', letterSpacing: '1px' }}>Apr 2026</span>
+            <div
+              className="text-[10px] tracking-[2px] uppercase"
+              style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--cream)' }}
+            >
+              Round 2
+            </div>
+            <div
+              className="text-[9px] tracking-[1px] mt-0.5"
+              style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'rgba(245,240,232,0.4)' }}
+            >
+              current · Apr 2026
+            </div>
           </div>
         </div>
 
         {/* Rows */}
-        {[
-          {
-            date: 'Day 1',
-            r1: {
-              date: 'Nov 21',
-              meds: 'Gonal 150 · Meriofert 150 · Desogestrel 75mg',
-              follicles: null,
-              notes: 'Ovaries asleep from IUD, follicles very small. IUD in place, uterus looks good.',
-            },
-            r2: {
-              date: 'Apr 1',
-              meds: 'Meds TBD',
-              follicles: null,
-              notes: '—',
-            },
-          },
-          {
-            date: 'Day 5',
-            r1: {
-              date: 'Nov 25',
-              meds: 'Gonal 150 · Meriofert 150 · Desogestrel 75mg',
-              follicles: [
-                { side: 'Right', count: 6,  detail: '5× <10mm · 1× 10mm' },
-                { side: 'Left',  count: 9,  detail: '8× <10mm · 1× 10mm' },
-              ],
-              notes: 'Follicles still small, expected at this stage.',
-            },
-            r2: null,
-          },
-          {
-            date: 'Day 7',
-            r1: {
-              date: 'Nov 27',
-              meds: 'Gonal 150 · Meriofert 150 · Desogestrel 75mg',
-              follicles: [
-                { side: 'Right', count: 7,  detail: '6× <10mm · 1× 13mm' },
-                { side: 'Left',  count: 10, detail: '8× <10mm · 1× 11mm · 1× 13mm' },
-              ],
-              notes: null,
-            },
-            r2: {
-              date: 'Apr 7',
-              meds: null,
-              follicles: null,
-              notes: '—',
-            },
-          },
-          {
-            date: 'Day 9',
-            r1: {
-              date: 'Nov 29',
-              meds: 'Gonal 150 · Meriofert 150 · Desogestrel 75mg',
-              follicles: [
-                { side: 'Right', count: 7,  detail: '4× <10mm · 1× 10mm · 2× 12mm · 1× 17mm' },
-                { side: 'Left',  count: 10, detail: '6× <10mm · 1× 10mm · 1× 12mm · 1× 14mm · 1× 17mm' },
-              ],
-              notes: '8 small · 8 medium · 0 big',
-            },
-            r2: {
-              date: 'Apr 9',
-              meds: null,
-              follicles: null,
-              notes: '—',
-            },
-          },
-          {
-            date: 'Day 11',
-            r1: null,
-            r2: {
-              date: 'Apr 11',
-              meds: null,
-              follicles: null,
-              notes: '—',
-            },
-          },
-          {
-            date: 'Day 12',
-            r1: {
-              date: 'Dec 2',
-              meds: 'Trigger shot',
-              follicles: null,
-              notes: '13 follicles total',
-            },
-            r2: null,
-          },
-          {
-            date: 'Day 15',
-            r1: {
-              date: 'Dec 5',
-              meds: null,
-              follicles: null,
-              notes: null,
-              retrieval: true,
-              eggs: '5 eggs retrieved',
-            },
-            r2: null,
-          },
-          {
-            date: 'Retrieval',
-            r1: null,
-            r2: {
-              date: 'Apr 16–20',
-              meds: null,
-              follicles: null,
-              notes: 'Potential retrieval window',
-              retrieval: true,
-            },
-          },
-        ].map((row, i) => (
-          <div
-            key={i}
-            className="grid border-b"
-            style={{ gridTemplateColumns: '90px 1fr 1fr', borderColor: 'var(--dust)' }}
-          >
-            {/* Day label */}
+        {tableRows.map((row, i) => {
+          const compact = isCompact(row.r1, row.r2)
+          return (
             <div
-              className="py-4 pr-3 flex items-start pt-5"
+              key={i}
+              className="grid border-b"
+              style={{
+                gridTemplateColumns: '68px 1fr 1fr',
+                borderColor: 'var(--dust)',
+              }}
             >
-              <span
-                className="text-[10px] tracking-[1px] uppercase"
-                style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+              {/* Day label */}
+              <div
+                className="flex items-start pr-3"
+                style={{ paddingTop: compact ? '10px' : '16px', paddingBottom: compact ? '10px' : '16px' }}
               >
-                {row.date}
-              </span>
+                <span
+                  className="text-[9px] tracking-[1px] uppercase"
+                  style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+                >
+                  {row.label}
+                </span>
+              </div>
+
+              <TableCell cell={row.r1} compact={compact} side="r1" />
+              <TableCell cell={row.r2} compact={compact} side="r2" />
             </div>
-
-            {/* Round 1 cell */}
-            <RoundCell data={row.r1} round={1} />
-
-            {/* Round 2 cell */}
-            <RoundCell data={row.r2} round={2} />
-          </div>
-        ))}
+          )
+        })}
       </div>
 
-      {/* ── April 2026 Calendar ──────────────────────────────────────────── */}
+      {/* ── April 2026 Calendar ───────────────────────────────────────────── */}
       <div className="mb-12">
         <div
           className="text-[10px] tracking-[2px] uppercase mb-6 pb-2 border-b"
@@ -254,18 +451,15 @@ export default function MedicalPage() {
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap gap-4 mb-5">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
           {[
-            { color: '#f0eef5', border: 'var(--recovery)', label: 'Appointment' },
-            { color: '#fdf5e6', border: 'var(--gold)',     label: 'Meds Begin' },
-            { color: '#e8f0e4', border: 'var(--sage)',     label: 'Retrieval Window' },
-            { color: '#7a8c6e', border: 'var(--sage)',     label: 'Most Likely Day', text: 'white' },
+            { color: '#f5f2fb', border: '#9b8bb4',          label: 'Pre-Appt / Appointment' },
+            { color: '#fdf5e6', border: 'var(--gold)',       label: 'Meds Begin' },
+            { color: '#edf4ea', border: 'var(--sage)',       label: 'Retrieval Window' },
+            { color: 'var(--sage)', border: 'var(--sage)',   label: 'Most Likely Day' },
           ].map((l) => (
             <div key={l.label} className="flex items-center gap-1.5">
-              <div
-                className="w-3 h-3 rounded-sm"
-                style={{ background: l.color, border: `1.5px solid ${l.border}` }}
-              />
+              <div className="w-3 h-3 rounded-sm" style={{ background: l.color, border: `1.5px solid ${l.border}` }} />
               <span
                 className="text-[10px] tracking-[1px] uppercase"
                 style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
@@ -289,56 +483,50 @@ export default function MedicalPage() {
           ))}
         </div>
 
-        {/* Calendar grid */}
+        {/* Calendar cells */}
         <div className="grid" style={{ gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px' }}>
           {gridCells.map((day, idx) => {
             if (day === null) {
-              return <div key={idx} style={{ minHeight: '72px', background: 'transparent' }} />
+              return <div key={idx} style={{ minHeight: '68px' }} />
             }
 
             const meta = dayMeta[day]
-            const isWindow  = meta?.type === 'window' || meta?.type === 'likely'
-            const isLikely  = meta?.type === 'likely'
-            const isAppt    = meta?.type === 'appt'
-            const isMeds    = meta?.type === 'meds'
+            const t = meta?.type
 
-            let bg     = 'var(--cream)'
-            let border = 'transparent'
+            let bg        = 'var(--cream)'
+            let border    = 'var(--dust)'
             let textColor = 'var(--muted)'
-            let dayColor  = 'var(--ink)'
+            let numColor  = 'var(--ink)'
 
-            if (isLikely) { bg = 'var(--sage)'; border = 'var(--sage)'; textColor = 'white'; dayColor = 'white' }
-            else if (isWindow) { bg = '#e8f0e4'; border = 'var(--sage)'; textColor = 'var(--sage)' }
-            else if (isAppt)   { bg = '#f0eef5'; border = 'var(--recovery)'; textColor = 'var(--recovery)' }
-            else if (isMeds)   { bg = '#fdf5e6'; border = 'var(--gold)'; textColor = 'var(--gold)' }
+            if (t === 'likely')    { bg = 'var(--sage)';  border = 'var(--sage)'; textColor = 'white'; numColor = 'white' }
+            else if (t === 'window')   { bg = '#edf4ea'; border = 'var(--sage)'; textColor = '#7a8c6e' }
+            else if (t === 'appt')     { bg = '#f5f2fb'; border = '#9b8bb4';     textColor = '#9b8bb4' }
+            else if (t === 'preappt')  { bg = '#f5f2fb'; border = '#9b8bb4';     textColor = '#9b8bb4' }
+            else if (t === 'meds')     { bg = '#fdf5e6'; border = 'var(--gold)'; textColor = 'var(--gold)' }
 
             return (
               <div
                 key={idx}
                 className="p-2 flex flex-col"
-                style={{
-                  minHeight: '72px',
-                  background: bg,
-                  border: `1.5px solid ${meta ? border : 'var(--dust)'}`,
-                }}
+                style={{ minHeight: '68px', background: bg, border: `1.5px solid ${border}` }}
               >
                 <div
                   className="text-[11px] font-medium mb-1"
-                  style={{ fontFamily: 'var(--font-dm-mono), monospace', color: dayColor }}
+                  style={{ fontFamily: 'var(--font-dm-mono), monospace', color: numColor }}
                 >
                   {day}
                 </div>
                 {meta && (
                   <>
                     <div
-                      className="text-[10px] leading-tight font-medium"
+                      className="text-[10px] leading-tight"
                       style={{ fontFamily: 'var(--font-dm-mono), monospace', color: textColor }}
                     >
                       {meta.label}
                     </div>
                     {meta.sub && (
                       <div
-                        className="text-[9px] mt-0.5 opacity-70"
+                        className="text-[9px] mt-0.5 opacity-75"
                         style={{ fontFamily: 'var(--font-dm-mono), monospace', color: textColor }}
                       >
                         {meta.sub}
@@ -356,98 +544,142 @@ export default function MedicalPage() {
   )
 }
 
-// ── Sub-component for each round cell ────────────────────────────────────────
+// ─── TableCell component ──────────────────────────────────────────────────────
 
-type FollicleRow = { side: string; count: number; detail: string }
+function TableCell({ cell, compact, side }: { cell: Cell; compact: boolean; side: 'r1' | 'r2' }) {
+  const isR2 = side === 'r2'
+  const borderLeft = isR2 ? '2px solid #9b8bb4' : '2px solid var(--dust)'
 
-type CellData = {
-  date: string
-  meds?: string | null
-  follicles?: FollicleRow[] | null
-  notes?: string | null
-  retrieval?: boolean
-  eggs?: string
-} | null
+  const py = compact ? '10px' : '16px'
+  const px = '16px'
 
-function RoundCell({ data, round }: { data: CellData; round: number }) {
-  const borderLeft = round === 1 ? '2px solid var(--dust)' : '2px solid #9b8bb4'
-  const emptyBg    = round === 1 ? 'transparent' : 'rgba(155,139,180,0.04)'
-
-  if (!data) {
+  // Null = no data for this round on this day
+  if (cell === null) {
     return (
       <div
-        className="py-4 px-4"
-        style={{ borderLeft, background: emptyBg, color: 'var(--dust)' }}
+        style={{
+          borderLeft,
+          paddingTop: py, paddingBottom: py, paddingLeft: px, paddingRight: px,
+          color: 'var(--dust)',
+        }}
       >
-        <span
-          className="text-[11px]"
-          style={{ fontFamily: 'var(--font-dm-mono), monospace' }}
-        >
-          —
-        </span>
+        <span style={{ fontFamily: 'var(--font-dm-mono), monospace', fontSize: '11px' }}>—</span>
       </div>
     )
   }
 
+  const colors = KIND_COLORS[cell.kind]
+  const hasTag = cell.kind !== 'meds' && cell.kind !== 'empty'
+
   return (
     <div
-      className="py-4 px-4"
-      style={{ borderLeft, background: emptyBg }}
+      style={{
+        borderLeft,
+        paddingTop: py, paddingBottom: py, paddingLeft: px, paddingRight: px,
+        background: colors.bg,
+      }}
     >
-      {/* Date */}
-      <div
-        className="text-[10px] tracking-[1px] uppercase mb-2"
-        style={{
-          fontFamily: 'var(--font-dm-mono), monospace',
-          color: data.retrieval ? 'var(--sage)' : (round === 2 ? 'var(--recovery)' : 'var(--muted)'),
-        }}
-      >
-        {data.date}
-        {data.retrieval && (
-          <span className="ml-2" style={{ color: 'var(--sage)' }}>✦ retrieval</span>
+      {/* Date + kind tag */}
+      <div className="flex items-center gap-2 mb-1.5">
+        <span
+          className="text-[10px] tracking-[1px] uppercase"
+          style={{
+            fontFamily: 'var(--font-dm-mono), monospace',
+            color: isR2 ? 'var(--recovery)' : 'var(--muted)',
+          }}
+        >
+          {cell.date}
+        </span>
+        {hasTag && (
+          <span
+            className="text-[8px] tracking-[1px] uppercase px-1.5 py-0.5"
+            style={{
+              fontFamily: 'var(--font-dm-mono), monospace',
+              background: colors.tag,
+              color: colors.tagText,
+              borderRadius: '2px',
+            }}
+          >
+            {kindLabel(cell.kind)}
+          </span>
         )}
       </div>
 
-      {/* Retrieval eggs */}
-      {data.eggs && (
+      {/* Retrieval result */}
+      {cell.eggs && (
         <div
-          className="text-[15px] font-light mb-1"
-          style={{ fontFamily: 'var(--font-cormorant), serif', color: 'var(--sage)' }}
+          className="mb-2"
+          style={{
+            fontFamily: 'var(--font-cormorant), serif',
+            fontSize: '17px',
+            fontWeight: 300,
+            color: 'var(--sage)',
+          }}
         >
-          {data.eggs}
+          {cell.eggs}
         </div>
       )}
 
-      {/* Meds */}
-      {data.meds && (
-        <div
-          className="text-[11px] mb-2 leading-relaxed"
-          style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
-        >
-          {data.meds}
+      {/* Meds — split on · so each med sits on its own line */}
+      {cell.meds && (
+        <div className="mb-1">
+          {cell.meds.split(' · ').map((med, mi) => (
+            <div
+              key={mi}
+              className="text-[10px] leading-snug"
+              style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--ink)' }}
+            >
+              {med}
+            </div>
+          ))}
+          {cell.medsNote && (
+            <div
+              className="mt-0.5 italic"
+              style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '12px', color: 'var(--muted)' }}
+            >
+              {cell.medsNote}
+            </div>
+          )}
         </div>
       )}
 
       {/* Follicles */}
-      {data.follicles && data.follicles.length > 0 && (
-        <div className="flex flex-col gap-1 mb-2">
-          {data.follicles.map((f) => (
+      {cell.follicles && cell.follicles.length > 0 && (
+        <div className="flex flex-col gap-0.5 mt-1.5 mb-1">
+          {cell.follicles.map((f) => (
             <div key={f.side} className="flex items-baseline gap-2">
               <span
-                className="text-[9px] tracking-[1px] uppercase w-8 shrink-0"
-                style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+                style={{
+                  fontFamily: 'var(--font-dm-mono), monospace',
+                  fontSize: '9px',
+                  letterSpacing: '1px',
+                  textTransform: 'uppercase',
+                  color: 'var(--muted)',
+                  width: '10px',
+                  flexShrink: 0,
+                }}
               >
-                {f.side[0]}
+                {f.side}
               </span>
+              {f.count !== null && (
+                <span
+                  style={{
+                    fontFamily: 'var(--font-cormorant), serif',
+                    fontSize: '15px',
+                    fontWeight: 300,
+                    color: 'var(--ink)',
+                    lineHeight: 1,
+                  }}
+                >
+                  {f.count}
+                </span>
+              )}
               <span
-                className="text-[13px] font-light"
-                style={{ fontFamily: 'var(--font-cormorant), serif', color: 'var(--ink)' }}
-              >
-                {f.count}
-              </span>
-              <span
-                className="text-[10px]"
-                style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
+                style={{
+                  fontFamily: 'var(--font-dm-mono), monospace',
+                  fontSize: '10px',
+                  color: 'var(--muted)',
+                }}
               >
                 {f.detail}
               </span>
@@ -457,12 +689,18 @@ function RoundCell({ data, round }: { data: CellData; round: number }) {
       )}
 
       {/* Notes */}
-      {data.notes && (
+      {cell.notes && (
         <div
-          className="text-[11px] italic leading-relaxed"
-          style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '13px', color: 'var(--muted)' }}
+          className="mt-1"
+          style={{
+            fontFamily: 'var(--font-cormorant), serif',
+            fontSize: '13px',
+            fontStyle: 'italic',
+            color: 'var(--muted)',
+            lineHeight: 1.5,
+          }}
         >
-          {data.notes}
+          {cell.notes}
         </div>
       )}
     </div>
