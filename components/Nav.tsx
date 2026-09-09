@@ -13,6 +13,7 @@ const links = [
   { href: '/shopping',    label: 'Shopping'   },
   { href: '/budget',      label: 'Budget'     },
   { href: '/medical',     label: 'Medical'    },
+  { href: '/reads',       label: 'Reads'      },
 ]
 
 export default function Nav() {
