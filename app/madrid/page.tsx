@@ -44,13 +44,13 @@ const CALENDAR_ROWS: CalRow[] = [
 ]
 
 const NAV_CARDS = [
-  { href: '/schedule',    label: 'Schedule',    subtitle: '22 days · 3 weeks',         color: 'var(--terracotta)' },
-  { href: '/restaurants', label: 'Restaurants', subtitle: '25+ places to eat',          color: 'var(--sage)'       },
-  { href: '/cafes',       label: 'Cafés',       subtitle: '8 coffee spots',             color: 'var(--gold)'       },
-  { href: '/markets',     label: 'Markets',     subtitle: 'Rastro · Motores · Salesas', color: 'var(--terracotta)' },
-  { href: '/shopping',    label: 'Shopping',    subtitle: 'Artisan · Thrift route',     color: 'var(--sage)'       },
-  { href: '/budget',      label: 'Budget',      subtitle: 'Running total · Track spend', color: 'var(--gold)'      },
-  { href: '/medical',     label: 'Medical',     subtitle: 'Tambre · Meds schedule',    color: 'var(--recovery)'   },
+  { href: '/madrid/schedule',    label: 'Schedule',    subtitle: '22 days · 3 weeks',         color: 'var(--terracotta)' },
+  { href: '/madrid/restaurants', label: 'Restaurants', subtitle: '25+ places to eat',          color: 'var(--sage)'       },
+  { href: '/madrid/cafes',       label: 'Cafés',       subtitle: '8 coffee spots',             color: 'var(--gold)'       },
+  { href: '/madrid/markets',     label: 'Markets',     subtitle: 'Rastro · Motores · Salesas', color: 'var(--terracotta)' },
+  { href: '/madrid/shopping',    label: 'Shopping',    subtitle: 'Artisan · Thrift route',     color: 'var(--sage)'       },
+  { href: '/madrid/budget',      label: 'Budget',      subtitle: 'Running total · Track spend', color: 'var(--gold)'      },
+  { href: '/madrid/medical',     label: 'Medical',     subtitle: 'Tambre · Meds schedule',    color: 'var(--recovery)'   },
 ]
 
 function getDaysElapsed() {

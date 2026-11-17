@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, DM_Mono, Outfit } from 'next/font/google'
 import './globals.css'
-import Nav from '@/components/Nav'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -26,8 +25,8 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: 'The Madrid Residency · April 1–22',
-  description: '3 weeks of egg freezing and a deliberate journey of health, building, reading, creating, and setting myself up to be a wonderful mother.',
+  title: 'Jessica Slocum',
+  description: 'Educator, builder, reader, runner, dancer, sewer, host, traveler, side quester. HQ: Brooklyn.',
 }
 
 export default function RootLayout({
@@ -40,10 +39,7 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${dmMono.variable} ${outfit.variable}`}
     >
-      <body>
-        <Nav />
-        <main>{children}</main>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

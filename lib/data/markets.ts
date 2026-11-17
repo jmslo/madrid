@@ -26,18 +26,6 @@ export const markets: Place[] = [
     category: 'market',
   },
   {
-    id: 'malamarket',
-    name: 'Malamarket',
-    address: 'Plaza del Dos de Mayo',
-    neighborhood: 'Malasaña',
-    hours: 'Saturdays during spring · Hours vary · Check @malamarket on Instagram',
-    tags: ['Vintage + Artisan', 'Every Saturday (spring)'],
-    description:
-      'Every Saturday of spring and fall, Malamarket fills Plaza del Dos de Mayo with designers, artisans, illustrators, and vintage sellers — the hipster counterpart to El Rastro, with better prices and a more curated edit. Plus live entertainment including swing dancing classes in the square. The plaza itself is the heart of Malasaña, surrounded by bars with terraces.',
-    notes: 'Confirm April dates on Instagram · Pair with HanSo or Toma Café nearby',
-    category: 'market',
-  },
-  {
     id: 'mercadillo-felipe-ii',
     name: 'Mercadillo Avenida de Felipe II',
     address: 'Avenida de Felipe II',

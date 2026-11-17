@@ -45,7 +45,7 @@ export const schedule: DayEntry[] = [
     status: 'done',
     weekNumber: 1,
     happened: [
-      '4:00am · Woke early — chose not to go back to sleep, pushed through jet lag',
+      '4:00am · Woke early — finished Mother Mary Comes to Me',
       '7:30am · Walk through Parque Retiro (2 miles)',
       '8:30am · Coffee shop work session: GitHub set up, Vercel connected, jessicaslocum.com purchased and connected, Recipe app deployed to Vercel, Clothing/packing app deployed to Vercel, Initial personal website plan drafted',
       '1:15pm · Cardio dance class at DAN\'S Salamanca',
@@ -63,7 +63,7 @@ export const schedule: DayEntry[] = [
       { label: 'Cortado + banana bread · Hola Coffee', amount: 8.26,  category: 'food'  },
       { label: 'jessicaslocum.com · Year 1 domain · Namecheap', amount: 6.99, category: 'build' },
     ],
-    milestones: ['Both apps live ✓', 'jessicaslocum.com ✓', 'Meds start tomorrow 10pm'],
+    milestones: ['Both apps live ✓', 'jessicaslocum.com ✓', 'Finished Book 1'],
   },
   // ── Days 3–7 ──────────────────────────────────────────────────────────────
   {
@@ -71,9 +71,32 @@ export const schedule: DayEntry[] = [
     date: 'Apr 3',
     weekday: 'Fri',
     title: 'Good Friday · First Meds Tonight',
-    subtitle: 'Public holiday · Most shops closed · Most restaurants open · 💊 Meds 10pm',
-    status: 'upcoming',
+    subtitle: 'Public holiday · Most shops closed · Most restaurants open · 💊 Meds 9pm',
+    status: 'done',
     weekNumber: 1,
+    
+    happened: [
+      '7:00am · Woke early — read On Chesil Beach',
+      '9:15am · Vinyasa Yoga @ Bam Labs',
+      '10:30am · Coffee & work session: troubleshooted VS deployment',
+      '11:40am · Tread & Strength @ Barry\'s Bootcamp',
+      '12:40pm · Acai Bowl Lunch from Oakberry',
+      '5:30pm · Madrid Residency site deployment using Node JS & Visual Studio Code',
+      '6:00pm · Maundy Thursday processions',
+      '6:45pm · Madrid Residency site deployment pt 2',
+      '8:30pm · Madrid Residency site deployment pt 2',
+      '9:00pm · Home for Meds',
+    ],
+    didNotHappen: [
+      'Real Jardín Botánico visit (moved to another day)',
+    ],
+    spend: [
+      { label: 'Cortado + banana bread · Hola Coffee', amount: 8.26,  category: 'food'  },
+      { label: 'jessicaslocum.com · Year 1 domain · Namecheap', amount: 6.99, category: 'build' },
+    ],
+    milestones: ['Both apps live ✓', 'jessicaslocum.com ✓', 'Finished Book 1'],
+
+
     blocks: [
       { time: 'Morning',            text: 'Morning stretch. Café + journal. Personal website build — open jessicaslocum.com in Vercel. City is quiet and contemplative on Good Friday — lean into it for deep work. Budget: €3–4 café' },
       { time: 'Afternoon',          text: 'Good Friday has a solemn, suspended atmosphere — Madrid goes slow. Long Retiro walk, Crystal Palace, bench with your book. Mercado de la Paz is closed today. Stock up on food at home from yesterday\'s groceries.' },

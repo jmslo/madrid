@@ -1,0 +1,1143 @@
+/* Homepage styles. Everything is scoped under .jsl so the Madrid pages are untouched. */
+
+.jsl {
+  --paper: #f4eee3;
+  --paper-2: #e9e0cf;
+  --surface: #fbf8f2;
+  --ink: #221e19;
+  --ink-soft: #5c5448;
+  --ink-faint: #8a7f6e;
+  --line: #d8ccb6;
+  --accent: #b8401f;
+  --accent-bright: #e8623f;
+  --accent-soft: #f0d2c3;
+  --butter: #ebc45a;
+  --pine: #21352b;
+  --pine-deep: #1b2c24;
+  --pine-land: #2f4b3a;
+  --cream: #f4eee3;
+
+  --serif: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
+  --sans: var(--font-instrument), -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  --mono: var(--font-dm-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --gap: clamp(2rem, 5vw, 5rem);
+  --sec-pad: clamp(4rem, 9vw, 7.5rem);
+
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.jsl ::selection {
+  background: var(--butter);
+  color: var(--ink);
+}
+
+.jsl a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.jsl :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.jsl .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.jsl .skip {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+  z-index: 10;
+}
+.jsl .skip:focus {
+  left: 0.5rem;
+}
+
+.jsl .wrap {
+  width: min(1140px, 100% - clamp(40px, 9vw, 112px));
+  margin-inline: auto;
+}
+
+.jsl .arrow {
+  display: inline-block;
+  margin-left: 0.45em;
+  transition: transform 0.25s ease;
+}
+
+/* ── Top bar ── */
+.jsl .topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding-block: 1.35rem;
+  border-bottom: 1px solid var(--line);
+}
+.jsl .topbar-mark {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.jsl .topbar nav {
+  display: flex;
+  gap: clamp(1rem, 2.6vw, 2.1rem);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+.jsl .topbar nav a {
+  padding-block: 0.2rem;
+  background: linear-gradient(var(--accent), var(--accent)) left bottom / 0 1px no-repeat;
+  transition: background-size 0.25s ease, color 0.2s ease;
+}
+.jsl .topbar nav a:hover {
+  color: var(--accent);
+  background-size: 100% 1px;
+}
+
+/* ── Hero ── */
+.jsl .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(190px, 25vw, 300px);
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  padding-top: clamp(2.75rem, 7vw, 5.5rem);
+  padding-bottom: clamp(1rem, 3vw, 2.5rem);
+}
+.jsl .hero-name {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(4rem, 14.5vw, 12.25rem);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+}
+.jsl .hero-name span,
+.jsl .hero-name em {
+  display: block;
+}
+.jsl .hero-name em {
+  font-style: italic;
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  margin-left: 0.42em;
+  padding-bottom: 0.08em;
+}
+.jsl .roles {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.45rem;
+  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  max-width: 46rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+.jsl .roles li:not(:last-child)::after {
+  content: '✳';
+  color: var(--accent);
+  margin-inline: 0.9em;
+  letter-spacing: 0;
+}
+.jsl .roles li:last-child {
+  background: linear-gradient(transparent 52%, var(--butter) 52%, var(--butter) 92%, transparent 92%);
+  padding-inline: 0.25em;
+  margin-inline: -0.25em;
+}
+
+.jsl .hero-figure {
+  padding: 10px;
+  border: 1px solid var(--ink);
+  border-radius: 999px 999px 0 0;
+}
+.jsl .arch {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  background: var(--paper-2);
+}
+.jsl .arch img,
+.jsl .arch svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.jsl .whereabouts {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  column-gap: var(--gap);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--ink);
+}
+.jsl .whereabouts > div {
+  padding-block: 1.1rem 0;
+}
+.jsl .whereabouts dt,
+.jsl .facts dt,
+.jsl .sub-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.jsl .whereabouts dd {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  line-height: 1.25;
+  margin-top: 0.3rem;
+  font-variation-settings: 'SOFT' 100;
+}
+
+/* ── Sections ── */
+.jsl .sec,
+.jsl .sec-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 2.5rem var(--gap);
+  padding-top: var(--sec-pad);
+  border-top: 1px solid var(--line);
+}
+.jsl .sec {
+  padding-bottom: var(--sec-pad);
+}
+.jsl #rapid-fire {
+  border-top: 0;
+}
+.jsl .sec-head {
+  align-self: start;
+}
+@media (min-width: 900px) {
+  .jsl .sec > .sec-head {
+    position: sticky;
+    top: 2.25rem;
+  }
+}
+.jsl .sec-kicker {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.jsl .sec-no {
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.jsl .sec-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.15rem, 4.3vw, 3.3rem);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+}
+.jsl .sec-title em {
+  font-style: italic;
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+
+/* ── 01 Rapid fire ── */
+.jsl .facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+.jsl .fact {
+  border-top: 1px solid var(--line);
+  padding: 1.05rem 0 1.9rem;
+}
+.jsl .fact dd {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.1vw, 1.65rem);
+  line-height: 1.15;
+  margin-top: 0.55rem;
+  letter-spacing: -0.01em;
+  font-variation-settings: 'SOFT' 100;
+}
+.jsl .fact dd small {
+  display: block;
+  margin-top: 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+}
+.jsl .fact dd a {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+  transition: color 0.2s ease;
+}
+.jsl .fact dd a:hover {
+  color: var(--accent);
+}
+
+/* ── 02 Projects ── */
+.jsl .projects li {
+  border-top: 1px solid var(--line);
+}
+.jsl .projects li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.jsl .project {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem clamp(1rem, 2.5vw, 1.75rem);
+  padding: 1.55rem 0;
+  transition: padding 0.3s ease;
+}
+.jsl .project-glyph {
+  color: var(--ink);
+  transition: color 0.2s ease, transform 0.3s ease;
+}
+.jsl .project-main > span {
+  display: block;
+}
+.jsl .project-title {
+  font-family: var(--serif);
+  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  font-variation-settings: 'SOFT' 100;
+  transition: color 0.2s ease;
+}
+.jsl .project-blurb {
+  margin-top: 0.3rem;
+  max-width: 34rem;
+  font-size: 0.97rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.jsl .project-link,
+.jsl .project-status {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.jsl .project-status {
+  color: var(--ink-faint);
+}
+.jsl .project-status::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 0.6em;
+  border-radius: 50%;
+  background: var(--butter);
+  box-shadow: 0 0 0 1px var(--ink-faint);
+}
+.jsl a.project:hover {
+  padding-left: 0.6rem;
+}
+.jsl a.project:hover .project-title,
+.jsl a.project:hover .project-glyph,
+.jsl a.project:hover .project-link {
+  color: var(--accent);
+}
+.jsl a.project:hover .project-glyph {
+  transform: rotate(-6deg);
+}
+.jsl a.project:hover .arrow {
+  transform: translate(3px, -1px);
+}
+
+/* ── 03 Reading ── */
+.jsl .sub-label {
+  margin-bottom: 1.2rem;
+}
+.jsl .feature blockquote p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.55rem, 3.1vw, 2.45rem);
+  line-height: 1.17;
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+.jsl .feature blockquote p::before {
+  content: '“';
+  position: absolute;
+  margin-left: -0.5em;
+  color: var(--accent);
+}
+.jsl .feature blockquote p::after {
+  content: '”';
+  color: var(--accent);
+}
+.jsl .feature figcaption {
+  margin-top: 1.25rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.jsl .feature cite {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink);
+}
+.jsl .stars {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.jsl .feature .stars {
+  margin-left: 0.5em;
+}
+
+.jsl .shelf {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.9rem);
+  margin-top: clamp(2.75rem, 5.5vw, 4.5rem);
+}
+.jsl .cover {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 15% 13% 13% 16%;
+  border-radius: 2px 4px 4px 2px;
+  color: var(--cream);
+  box-shadow: inset 7px 0 0 rgba(0, 0, 0, 0.14), inset 8px 0 0 rgba(255, 255, 255, 0.08),
+    0 18px 26px -18px rgba(34, 30, 25, 0.55);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+}
+.jsl .cover::after {
+  content: '';
+  position: absolute;
+  inset: 6% 6% 6% 9.5%;
+  border: 1px solid currentColor;
+  opacity: 0.32;
+  pointer-events: none;
+}
+.jsl .cover-title {
+  font-family: var(--serif);
+  font-size: clamp(0.95rem, 1.5vw, 1.3rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+.jsl .cover-author {
+  font-size: clamp(0.5rem, 0.72vw, 0.6rem);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.jsl .cover-1 {
+  justify-content: center;
+  text-align: center;
+  gap: 0.9rem;
+}
+.jsl .cover-1 .cover-title {
+  font-style: italic;
+  font-weight: 300;
+}
+.jsl .cover-2 {
+  flex-direction: column-reverse;
+}
+.jsl .tone-persimmon {
+  background: var(--accent);
+}
+.jsl .tone-pine {
+  background: var(--pine-land);
+}
+.jsl .tone-slate {
+  background: #4c5d78;
+}
+.jsl .tone-butter {
+  background: #e6bd52;
+  color: var(--ink);
+}
+.jsl .tone-plum {
+  background: #6a4c60;
+}
+.jsl .tone-ink {
+  background: var(--ink);
+  color: var(--butter);
+}
+.jsl .book:hover .cover {
+  transform: translateY(-7px) rotate(-1.2deg);
+  box-shadow: inset 7px 0 0 rgba(0, 0, 0, 0.14), inset 8px 0 0 rgba(255, 255, 255, 0.08),
+    0 28px 30px -20px rgba(34, 30, 25, 0.6);
+}
+.jsl .book-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+.jsl .book-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+.jsl .book-quote {
+  margin-top: 0.35rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+.jsl .shelf-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2.25rem;
+  margin-top: 2.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.jsl .shelf-more a {
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--ink);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.jsl .shelf-more a::after {
+  content: ' →';
+}
+.jsl .shelf-more a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.jsl .work-row {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 3rem var(--gap);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  padding-bottom: var(--sec-pad);
+  border-top: 1px solid var(--line);
+}
+.jsl .work-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 2rem clamp(1.5rem, 3vw, 2.75rem);
+}
+.jsl .work h3 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  margin-bottom: 0.9rem;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+.jsl .work-item > * {
+  position: relative;
+  display: block;
+  padding: 0.9rem 1.75rem 1rem 0;
+  border-top: 1px solid var(--line);
+}
+.jsl .work-item span {
+  display: block;
+}
+.jsl .work-kind {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.jsl .work-title {
+  margin-top: 0.3rem;
+  font-family: var(--serif);
+  font-size: 1.14rem;
+  line-height: 1.25;
+  font-variation-settings: 'SOFT' 100;
+  transition: color 0.2s ease;
+}
+.jsl .work-source {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.jsl .work-item .arrow {
+  position: absolute;
+  right: 0;
+  top: 0.95rem;
+  font-size: 0.9rem;
+  color: var(--ink-faint);
+}
+.jsl .work-item a:hover .work-title,
+.jsl .work-item a:hover .arrow {
+  color: var(--accent);
+}
+.jsl .work-item a:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Rec form, styled as a library card */
+.jsl .rec {
+  align-self: start;
+  position: relative;
+  padding: 1.6rem clamp(1.4rem, 2.5vw, 2rem) 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  box-shadow: 0 18px 30px -24px rgba(34, 30, 25, 0.5);
+  transform: rotate(0.6deg);
+}
+.jsl .rec::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 3px 3px 0 0;
+}
+.jsl .rec-title {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin: 0.5rem 0 1.1rem;
+  font-variation-settings: 'SOFT' 100;
+}
+.jsl .rec-title em {
+  font-style: italic;
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+.jsl .rec input[type='text'] {
+  width: 100%;
+  padding: 0.7rem 0 0.55rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ink-faint);
+  border-radius: 0;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--ink);
+  transition: border-color 0.2s ease;
+}
+.jsl .rec input[type='text']::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.jsl .rec input[type='text']:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+  box-shadow: 0 1px 0 var(--accent);
+}
+.jsl .rec-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+.jsl .rec-row input {
+  flex: 1;
+  min-width: 0;
+}
+.jsl .rec button {
+  flex: none;
+  padding: 0.7rem 1.35rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease;
+}
+.jsl .rec button:hover {
+  background: var(--accent);
+}
+.jsl .rec button:disabled {
+  opacity: 0.6;
+}
+.jsl .rec-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.jsl .rec-status {
+  min-height: 1.5rem;
+  margin-top: 0.9rem;
+  font-size: 0.88rem;
+  color: var(--accent);
+}
+
+/* ── 04 Places ── */
+.jsl .places {
+  background: var(--pine);
+  color: var(--cream);
+  padding-block: var(--sec-pad);
+}
+.jsl .places-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem 2rem;
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+.jsl .places .sec-kicker {
+  color: rgba(244, 238, 227, 0.68);
+}
+.jsl .places .sec-no {
+  color: var(--butter);
+}
+.jsl .legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 238, 227, 0.78);
+}
+.jsl .legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.jsl .key {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
+.jsl .key-hq {
+  background: var(--butter);
+  box-shadow: 0 0 0 2px var(--pine), 0 0 0 3px var(--butter);
+}
+.jsl .key-orbit {
+  border: 1.5px solid var(--cream);
+}
+.jsl .key-list {
+  background: var(--accent-bright);
+  border: 1.5px solid var(--cream);
+}
+.jsl .places-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: 2.5rem clamp(1.75rem, 4vw, 3.5rem);
+  align-items: start;
+}
+.jsl .map-plate {
+  border: 1px solid rgba(244, 238, 227, 0.3);
+}
+.jsl .map {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--pine-deep);
+}
+.jsl .map-grid line {
+  stroke: rgba(244, 238, 227, 0.075);
+  stroke-width: 1;
+}
+.jsl .map-land {
+  fill: var(--pine-land);
+  stroke: #6f8d76;
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+}
+.jsl .map-ticks text {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: rgba(244, 238, 227, 0.42);
+}
+.jsl .map-arcs path {
+  fill: none;
+  stroke: rgba(244, 238, 227, 0.4);
+  stroke-width: 1.1;
+  stroke-dasharray: 1.5 5.5;
+  stroke-linecap: round;
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
+}
+.jsl .map-arcs path.is-active {
+  stroke: var(--butter);
+  stroke-width: 1.8;
+}
+.jsl .pin {
+  cursor: pointer;
+}
+.jsl .pin-hit {
+  fill: transparent;
+}
+.jsl .pin-halo {
+  fill: rgba(235, 196, 90, 0.24);
+}
+.jsl .pin-list {
+  fill: var(--accent-bright);
+  stroke: var(--cream);
+  stroke-width: 1.5;
+}
+.jsl .pin-orbit {
+  fill: var(--pine-deep);
+  stroke: var(--cream);
+  stroke-width: 1.7;
+}
+.jsl .pin-hq {
+  fill: var(--butter);
+}
+.jsl .pin-hq-ring {
+  fill: none;
+  stroke: var(--butter);
+  stroke-width: 1.2;
+}
+.jsl .pin-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  fill: var(--cream);
+  paint-order: stroke;
+  stroke: var(--pine-deep);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  transition: fill 0.2s ease;
+}
+.jsl .pin.is-active .pin-label {
+  fill: var(--butter);
+}
+
+.jsl .place-list li {
+  display: grid;
+  grid-template-columns: 1.9rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.78rem 0 0.85rem;
+  border-top: 1px solid rgba(244, 238, 227, 0.2);
+}
+.jsl .place-list li:last-child {
+  border-bottom: 1px solid rgba(244, 238, 227, 0.2);
+}
+.jsl .place-no {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: rgba(244, 238, 227, 0.5);
+}
+.jsl .place-main > span {
+  display: block;
+}
+.jsl .place-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  line-height: 1.15;
+  font-variation-settings: 'SOFT' 100;
+  transition: color 0.2s ease;
+}
+.jsl .place-list li.is-active .place-name {
+  color: var(--butter);
+}
+.jsl .place-kind {
+  margin-top: 0.3rem;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 238, 227, 0.62);
+}
+.jsl .place-note {
+  margin-top: 0.45rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: rgba(244, 238, 227, 0.85);
+}
+.jsl .place-link {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--butter);
+}
+.jsl .place-link:hover .arrow {
+  transform: translate(2px, -2px);
+}
+.jsl .places :focus-visible {
+  outline-color: var(--butter);
+}
+
+/* ── 05 Preoccupations ── */
+.jsl .thoughts li {
+  border-top: 1px solid var(--line);
+}
+.jsl .thoughts li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.jsl .thoughts button {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr) 1.1rem;
+  align-items: baseline;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 1.15rem 0;
+  text-align: left;
+}
+.jsl .thought-no {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+}
+.jsl .thought-topic {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.3vw, 1.8rem);
+  line-height: 1.16;
+  letter-spacing: -0.012em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  transition: color 0.2s ease;
+}
+.jsl .thoughts button:hover .thought-topic,
+.jsl .thoughts .is-open .thought-topic {
+  color: var(--accent);
+}
+.jsl .thoughts .is-open .thought-topic {
+  font-style: italic;
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+.jsl .thought-toggle {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  align-self: center;
+}
+.jsl .thought-toggle::before,
+.jsl .thought-toggle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 13px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.25s ease;
+}
+.jsl .thought-toggle::after {
+  transform: rotate(90deg);
+}
+.jsl .thoughts .is-open .thought-toggle::after {
+  transform: rotate(0deg);
+}
+.jsl .thought-take {
+  padding: 0 2rem 1.6rem 3.3rem;
+}
+.jsl .thought-take p {
+  max-width: 35rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ── 06 Writings ── */
+.jsl .writings li {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 1.4rem 0 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.jsl .writings li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.jsl .writing-no {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+}
+.jsl .writing-main > * {
+  display: block;
+}
+.jsl .writing-title {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.95rem);
+  line-height: 1.14;
+  letter-spacing: -0.014em;
+  text-wrap: balance;
+  font-variation-settings: 'SOFT' 100;
+}
+.jsl a.writing-title:hover {
+  color: var(--accent);
+}
+.jsl .writing-dek {
+  margin-top: 0.45rem;
+  max-width: 35rem;
+  font-size: 0.97rem;
+  color: var(--ink-soft);
+}
+.jsl .writings .is-placeholder {
+  opacity: 0.42;
+}
+.jsl .writings-note {
+  margin-top: 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+
+/* ── Footer ── */
+.jsl .foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding-block: 1.6rem 3rem;
+  border-top: 1px solid var(--ink);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+/* ── Smaller screens ── */
+@media (max-width: 899px) {
+  .jsl .sec,
+  .jsl .sec-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .jsl .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .jsl .shelf {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 2.25rem;
+  }
+  .jsl .cover-title {
+    font-size: clamp(0.95rem, 2.6vw, 1.35rem);
+  }
+  .jsl .cover-author {
+    font-size: 0.56rem;
+  }
+  .jsl .work-row,
+  .jsl .places-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .jsl .rec {
+    max-width: 30rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .jsl {
+    font-size: 16px;
+  }
+  .jsl .topbar-mark {
+    display: none;
+  }
+  .jsl .topbar nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+  .jsl .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .jsl .hero-figure {
+    width: min(58%, 230px);
+    margin-top: 2.25rem;
+  }
+  .jsl .whereabouts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .jsl .whereabouts > div + div {
+    margin-top: 1.1rem;
+    border-top: 1px solid var(--line);
+  }
+  .jsl .roles {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+  }
+  .jsl .roles li:not(:last-child)::after {
+    margin-inline: 0.7em;
+  }
+  .jsl .project {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+  .jsl .project-glyph svg {
+    width: 40px;
+    height: 40px;
+  }
+  .jsl .project-link,
+  .jsl .project-status {
+    grid-column: 2;
+    margin-top: 0.35rem;
+  }
+  .jsl .shelf {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .jsl .cover-title {
+    font-size: clamp(1rem, 4.6vw, 1.4rem);
+  }
+  .jsl .work-cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .jsl .pin-label,
+  .jsl .map-ticks {
+    display: none;
+  }
+  .jsl .pin circle:not(.pin-hit) {
+    transform: scale(2.1);
+  }
+  .jsl .map-arcs path {
+    stroke-width: 2;
+    stroke-dasharray: 2 9;
+  }
+  .jsl .thought-take {
+    padding: 0 0 1.5rem 3.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jsl *,
+  .jsl *::before,
+  .jsl *::after {
+    transition: none !important;
+  }
+}

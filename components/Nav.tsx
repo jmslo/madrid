@@ -5,15 +5,14 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 const links = [
-  { href: '/',            label: 'Overview'   },
-  { href: '/schedule',    label: 'Schedule'   },
-  { href: '/restaurants', label: 'Restaurants'},
-  { href: '/cafes',       label: 'Cafés'      },
-  { href: '/markets',     label: 'Markets'    },
-  { href: '/shopping',    label: 'Shopping'   },
-  { href: '/budget',      label: 'Budget'     },
-  { href: '/medical',     label: 'Medical'    },
-  { href: '/reads',       label: 'Reads'      },
+  { href: '/madrid',      label: 'Overview'   },
+  { href: '/madrid/schedule',    label: 'Schedule'   },
+  { href: '/madrid/restaurants', label: 'Restaurants'},
+  { href: '/madrid/cafes',       label: 'Cafés'      },
+  { href: '/madrid/markets',     label: 'Markets'    },
+  { href: '/madrid/shopping',    label: 'Shopping'   },
+  { href: '/madrid/budget',      label: 'Budget'     },
+  { href: '/madrid/medical',     label: 'Medical'    },
 ]
 
 export default function Nav() {
@@ -21,7 +20,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false)
 
   const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href)
+    href === '/madrid' ? pathname === '/madrid' : pathname.startsWith(href)
 
   return (
     <nav

@@ -24,7 +24,7 @@ export default function DayPage({ params }: Props) {
       {/* Back */}
       <div className="py-6 border-b" style={{ borderColor: 'var(--dust)' }}>
         <Link
-          href="/schedule"
+          href="/madrid/schedule"
           className="text-[10px] tracking-[2px] uppercase"
           style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
         >
@@ -82,7 +82,7 @@ export default function DayPage({ params }: Props) {
       <div className="flex justify-between mt-10 pt-6 border-t" style={{ borderColor: 'var(--dust)' }}>
         {prev ? (
           <Link
-            href={`/schedule/${prev.dayNumber}`}
+            href={`/madrid/schedule/${prev.dayNumber}`}
             className="text-[10px] tracking-[2px] uppercase"
             style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
           >
@@ -91,7 +91,7 @@ export default function DayPage({ params }: Props) {
         ) : <span />}
         {next ? (
           <Link
-            href={`/schedule/${next.dayNumber}`}
+            href={`/madrid/schedule/${next.dayNumber}`}
             className="text-[10px] tracking-[2px] uppercase"
             style={{ fontFamily: 'var(--font-dm-mono), monospace', color: 'var(--muted)' }}
           >

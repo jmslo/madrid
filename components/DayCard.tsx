@@ -192,7 +192,7 @@ export default function DayCard({ day, linkable = true }: DayCardProps) {
   if (!linkable) return inner
 
   return (
-    <Link href={`/schedule/${day.dayNumber}`} className="block hover:opacity-90 transition-opacity">
+    <Link href={`/madrid/schedule/${day.dayNumber}`} className="block hover:opacity-90 transition-opacity">
       {inner}
     </Link>
   )

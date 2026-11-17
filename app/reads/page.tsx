@@ -7,5 +7,9 @@ export const metadata: Metadata = {
 }
 
 export default function ReadsPage() {
-  return <ReadsShelf />
+  return (
+    <main>
+      <ReadsShelf />
+    </main>
+  )
 }
